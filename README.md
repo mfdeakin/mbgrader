@@ -79,3 +79,7 @@ Create a new response from student responses by entering:
 ## Canvas
 
 The script `canvas2mbgrader.m` reads MATLAB `.mat` and `.fig` files from the `canvas` folder and saves the data to the `submissions` folder. The script requires a file `canvasIdstudentID.csv` with Canvas IDs in the first column and Student IDs in the second column.
+
+## Uploading feedback
+The script `mbgrader2canvas.py` reads the grades and feedback produced by mbgrader and submits it to Canvas. To do this, it will need a token from Canvas; you can generate a token from Canvas by going to 'Account', 'Settings', and clicking 'New Access Token'. This token needs to be stored in the top of the mbgrader directory in the file 'token.txt'.
+When running this script, it will request the Canvas Course ID, the Canvas Assignment ID, and the Assignment Name. The Canvas IDs can be obtained from the URL of the assignment submission page, e.g. `https://canvas.ubc.ca/courses/12345/assignments/9876543` has a course ID of 12345 and an assignment ID of 9876543. The Assignment Name is what you called the assignment in mbgrader.

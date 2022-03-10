@@ -63,7 +63,7 @@ try
     clear provided provided_filename
 catch
     display('provided file was not found');
-    return
+    provided_vars = []
 end
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -125,12 +125,21 @@ for i=1:length(mat_files)
         saved_vars = saved_vars + 1;
         % Write variable data to file
         if isa(value,'string') || isa(value,'char')
-            target = fullfile(destination,[varname,'.txt']);
-            f = fopen(target,'w');
-            fprintf(f,'%s',value);
-            fclose(f);
+            if ismissing(value)
+                f = fopen(fullfile(issues,'issues.txt'),'a');
+                fprintf(f,['Missing variable ',varname,' ignored for Student Number ',student_number,' Canvas ID ',canvas_id,' filename ',filename,'\n']);
+                fclose(f);
+            else
+                target = fullfile(destination,[varname,'.txt']);
+                f = fopen(target,'w');
+                fprintf(f,'%s',value);
+                fclose(f);
+            end
         elseif isa(value,'double')
             target = fullfile(destination,[varname,'.csv']);
+            if issparse(value)
+                value = full(value)
+            end
             dlmwrite(target,value,'precision',10);
         elseif isa(value,'logical')
             target = fullfile(destination,[varname,'.log']);
